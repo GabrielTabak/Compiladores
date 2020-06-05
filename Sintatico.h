@@ -7,7 +7,7 @@ void Sintatico(char *buffer,int *controle, int *contador,FILE * F, char *palavra
 
 
 
-
+//Procedimento fator
 void fator(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int tamanho, FILE *erros,char * classe, int *linha){
 
     //Precisa do identificador ou das outras
@@ -32,7 +32,7 @@ void fator(char *buffer,int *controle, int *contador,FILE * F, char *palavra, in
             }
         }
     }
-    else{//ARRUMARRR
+    else{
 	fprintf(erros,"Erro Sintatico: %s Seu fator esta errado! Linha: %d\n", palavra,*linha);
        	while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
 	      (strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)){
@@ -44,11 +44,7 @@ void fator(char *buffer,int *controle, int *contador,FILE * F, char *palavra, in
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
+//Procedimento expressão
 void expressao(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int tamanho, FILE *erros,char * classe, int * linha){
 
     //Pode ter ou nao o +/-, ou seja, nao precisa por erro, op un
@@ -80,12 +76,9 @@ void expressao(char *buffer,int *controle, int *contador,FILE * F, char *palavra
 
 }
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 //Soh um CMD pode ser ativado por vez, entao if e else if pros outros
+//Procedimento CMD
 void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int tamanho, FILE *erros,char * classe, int *linha){
 
 //READ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -147,7 +140,6 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 
 //WRITE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // write(Id1,Id2,...)
-
     else if(strcmp(classe,"write") == 0){
         Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         if(strcmp(classe,"abreP") == 0){
@@ -203,9 +195,9 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
     }
 //WRITE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+
 //WHILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // while( <condicao> ) do <cmd>
-
     else if(strcmp(classe,"while") == 0){
         Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         if(strcmp(classe,"abreP") == 0){
@@ -266,12 +258,10 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 
 	CMD(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
     }
-
 //WHILE ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 //IF ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // if <condicao> then <cmd> <pfalsa>
-
     else if(strcmp(classe,"if") == 0){
         Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
 //Procedimento condicao
@@ -312,8 +302,6 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
             CMD(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         }
-
-
     }
 //IF ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -321,7 +309,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 //ID ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // id := expressao
 //ID ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// id ou id()
+// id ou id(a1;a2;...)
     else if(strcmp(classe,"Identificador") == 0){
     //Duas opcoes aqui
         Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
@@ -372,10 +360,8 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
                 }
             }
         }
-	else if(strcmp(classe,"doiP") == 0){}//Nao da nada nesse caso, dois pontos sera consumido dps, chamada de procedimento sem argumentos
-
+	else if(strcmp(classe,"doisP") == 0){}//Nao da nada nesse caso, dois pontos sera consumido dps, chamada de procedimento sem argumentos
     }
-
 //ID ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 //ID ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -396,12 +382,13 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
         }
 
     }
- 
+//begin ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 //for ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// for 
+// for a := numInt to numInt do <CMD>
     else if(strcmp(classe,"for") == 0){
         Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
-	//Id
+
         if(strcmp(classe,"Identificador") == 0){
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         }
@@ -412,7 +399,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
-	// :=
+
         if(strcmp(classe,"DPIgual") == 0){
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         }
@@ -423,7 +410,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
-	//numero inteiro
+
         if(strcmp(classe,"numInt") == 0){
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         }
@@ -434,7 +421,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
-	// to
+
         if(strcmp(classe,"to") == 0){
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         }
@@ -445,7 +432,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
-	//numero inteiro
+
         if(strcmp(classe,"numInt") == 0){
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
         }
@@ -468,21 +455,13 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
             }
         }
 	CMD(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
-     //comandos VOLTAR Para comandos
-
     }
-
-
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//Temos que olhar novamente a verificacao de erros
 
+//Procedimento comandos
 void Comandos(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int tamanho, FILE *erros,char * classe,int *linha){
-
 
 //Enquanto nao for end, vai fazendo os comandos do cmd
 while((strcmp(classe,"end") != 0) & (strcmp(classe,"Fim") != 0)){
@@ -499,15 +478,12 @@ while((strcmp(classe,"end") != 0) & (strcmp(classe,"Fim") != 0)){
 	    Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
         }
     } 
-
 }
 
 }
 
 
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+//Procedimento declaração, DC <- dc_c dc_v dc_p
 void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int tamanho, FILE *erros,char * classe,int * linha){
 
     
@@ -524,17 +500,15 @@ void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *pa
             while((strcmp(classe,"Igual") != 0) & (strcmp(classe,"var") != 0) & (strcmp(classe,"procedure") != 0)& (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
 	        Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
-        } 
-
-	
+        } 	
 //Igual
         if(strcmp(classe,"Igual") == 0){
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);//consome igual
         }
         else{
-	    fprintf(erros,"Erro Sintatico: %s deveria ser um Igual! Linha: %d\n", palavra,*linha);
+	    fprintf(erros,"Erro Sintatico: %s deveria ser um = ! Linha: %d\n", palavra,*linha);
             while((strcmp(classe,"menos") != 0) & (strcmp(classe,"numReal") != 0) & (strcmp(classe,"numInt") != 0)&
- (strcmp(classe,"var") != 0) & (strcmp(classe,"procedure") != 0)& (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
+                  (strcmp(classe,"var") != 0) & (strcmp(classe,"procedure") != 0)& (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         } 
@@ -609,7 +583,7 @@ void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *pa
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);//consome 
         }
         else{
-	    fprintf(erros,"Erro Sintatico: %s Precisavamos de :um tipo para sua variavel ! Linha: %d\n", palavra,*linha);
+	    fprintf(erros,"Erro Sintatico: %s Precisavamos de um tipo para sua variavel ! Linha: %d\n", palavra,*linha);
             while((strcmp(classe,"PeV") != 0) & (strcmp(classe,"procedure") != 0)& (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
@@ -753,7 +727,7 @@ void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *pa
 
 
             if(strcmp(classe,"doisP") == 0){
-                Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);//consome igual
+                Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);//consome ;
             }
             else{
 	        fprintf(erros,"Erro Sintatico: %s Precisavamos de : ! Linha: %d\n", palavra,*linha);
@@ -904,7 +878,6 @@ void sintatico(char *buffer,int *controle, int *contador,FILE * F, char *palavra
         }
     }
 
-//LEMBRAR, AO CHEGAR AQUI, CADEIA TEM QUE SER VAZIA!! OU SEJA, I=1
 
     if(strcmp(classe,"Fim") == 0){
         Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
@@ -914,7 +887,3 @@ void sintatico(char *buffer,int *controle, int *contador,FILE * F, char *palavra
     }
 
 }
-
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
