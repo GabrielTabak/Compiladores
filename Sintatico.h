@@ -629,7 +629,7 @@ void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *pa
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);//consome Id
         }
         else{
-	    fprintf(erros,"Erro Sintatico: %s Precisavamos de : ! Linha: %d\n", palavra,*linha);
+	    fprintf(erros,"Erro Sintatico: %s Precisavamos de um identificador! Linha: %d\n", palavra,*linha);
             while((strcmp(classe,"abreP") != 0) & (strcmp(classe,"PeV") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
@@ -639,7 +639,7 @@ void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *pa
 	if(strcmp(classe,"abreP") == 0){
             Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);//consome Parenteses
             if(strcmp(classe,"Identificador") != 0){//Se nao for Id agr, eh erro
-		    fprintf(erros,"Erro Sintatico: %s Precisavamos de :um identificador! Linha: %d\n", palavra,*linha);	
+		    fprintf(erros,"Erro Sintatico: %s Precisavamos de um identificador! Linha: %d\n", palavra,*linha);	
                     while((strcmp(classe,"fechaP") != 0) & (strcmp(classe,"PeV") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
 			Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             	    }
@@ -684,15 +684,13 @@ void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *pa
 
                 if(strcmp(classe,"PeV") == 0){
                     Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);//consome :
+                    if(strcmp(classe,"Identificador") != 0){//Se nao for Id agr, eh erro
+		        fprintf(erros,"Erro Sintatico: %s Precisavamos de um identificador apos o ;! Linha: %d\n", palavra,*linha);	
+                        while((strcmp(classe,"fechaP") != 0) & (strcmp(classe,"PeV") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
+			    Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
+            	        }
+      	            }
                 }
-                else{
-		    fprintf(erros,"Erro Sintatico: %s Precisavamos de ; ! Linha: %d\n", palavra,*linha);
-       		    while((strcmp(classe,"fechaP") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Fim") != 0)){
-			Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
-            	    }
-        	}
-
-
             }
 
             if(strcmp(classe,"fechaP") == 0){
@@ -704,7 +702,6 @@ void ProcedimentoDC(char *buffer,int *controle, int *contador,FILE * F, char *pa
 		    Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
                 }
             }
-
         }
 
 //PeV
@@ -913,4 +910,3 @@ void sintatico(char *buffer,int *controle, int *contador,FILE * F, char *palavra
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
