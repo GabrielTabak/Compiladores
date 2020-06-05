@@ -23,6 +23,14 @@ void fator(char *buffer,int *controle, int *contador,FILE * F, char *palavra, in
 	if(strcmp(classe,"fechaP") == 0){
 	    Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
 	}
+	else{
+	    fprintf(erros,"Erro Sintatico: %s Precisavamos de )! Linha: %d\n", palavra,*linha);
+       	    while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
+		(strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0) & (strcmp(classe,"multiplicacao") != 0) &
+		(strcmp(classe,"divisao") != 0)){
+		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
+            }
+        }
     }
     else{//ARRUMARRR
 	fprintf(erros,"Erro Sintatico: %s Seu fator esta errado! Linha: %d\n", palavra,*linha);
