@@ -192,7 +192,7 @@ int AutomatoComentario(char *buffer, int * contador, int * controle, FILE *f, ch
 	    *contador = 0;
 	    fread(buffer,200,1,f);
     	}
-	if(*controle >= tamanho - 1){
+	if(*controle >= tamanho ){
 	    fprintf(erros,"Erro Lexico: Nao fechou o comentario. \n");palavra[0] = '{'; palavra[1] = '\0'; return 37;
 	}	
     }
