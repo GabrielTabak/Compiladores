@@ -133,6 +133,10 @@ int AutomatoOp(char *buffer, int * contador, int * controle, FILE *f, char *pala
         if(buffer[*(contador)] == operandos1[i]){
 	    palavra[tamanhoId] = operandos1[i];tamanhoId++; 
             *(contador)=*(contador)+1;*(controle)=*(controle)+1;qual = i;
+	    if(*contador >= 200){
+		*contador = 0;
+		fread(buffer,200,1,f);
+            }
 	    verifica++;break;
     	}
     i++;
@@ -150,10 +154,18 @@ int AutomatoOp(char *buffer, int * contador, int * controle, FILE *f, char *pala
 	    if(buffer[*(contador)] == '='){	    
 		palavra[tamanhoId] = '=';tamanhoId++; qual+=4;
 	        *(contador)=*(contador)+1;*(controle)=*(controle)+1;
+    		if(*contador >= 200){
+		    *contador = 0;
+		    fread(buffer,200,1,f);
+    		}
 	    }
 	    else if(palavra[tamanhoId-1] == '<' && buffer[*(contador)] == '>'){
 		palavra[tamanhoId] = buffer[*(contador)];tamanhoId++; qual=17;
-	        *(contador)=*(contador)+1;*(controle)=*(controle)+1;		
+	        *(contador)=*(contador)+1;*(controle)=*(controle)+1;	
+                if(*contador >= 200){
+	   	    *contador = 0;
+		    fread(buffer,200,1,f);
+    		}	
 	    }
             break;
     	}
@@ -185,6 +197,10 @@ int AutomatoComentario(char *buffer, int * contador, int * controle, FILE *f, ch
 	}	
     }
     *(contador)+=1;*controle = *controle +1;palavra[0] = '{';palavra[1] = '}';palavra[2] = '\0';
+    if(*contador >= 200){
+	*contador = 0;
+	fread(buffer,200,1,f);
+    }
     return 37;
 
 }
@@ -261,4 +277,7 @@ int j,i,verif=0;
    }
 
 }
+
+
+
 
