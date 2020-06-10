@@ -35,7 +35,7 @@ void fator(char *buffer,int *controle, int *contador,FILE * F, char *palavra, in
     else{
 	fprintf(erros,"Erro Sintatico: %s Seu fator esta errado! Linha: %d\n", palavra,*linha);
        	while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
-	      (strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)){
+	      (strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)&(strcmp(classe,"else") != 0)){
 	    Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
         }
     }
@@ -130,7 +130,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 	else{
 	    fprintf(erros,"Erro Sintatico: %s Precisavamos de um ) ! Linha: %d\n", palavra,*linha);
        	    while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
-		(strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)){
+		(strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)&(strcmp(classe,"else") != 0)){
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
@@ -187,7 +187,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 	else{
 	    fprintf(erros,"Erro Sintatico: %s Precisavamos de um ) ! Linha: %d\n", palavra,*linha);
        	    while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
-		(strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)){
+		(strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)&(strcmp(classe,"else") != 0)){
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
@@ -225,7 +225,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 	    fprintf(erros,"Erro Sintatico: %s Precisavamos de uma relacao! Linha: %d\n", palavra,*linha);
        	    while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
 		  (strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0) & (strcmp(classe,"numReal") != 0) &
-		  (strcmp(classe,"numInt") != 0)){
+		  (strcmp(classe,"numInt") != 0)&(strcmp(classe,"else") != 0)){
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
@@ -336,6 +336,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
                 }
             }
 	    while(strcmp(classe,"PeV") == 0){//Pode ou nao ter
+		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
   	        if(strcmp(classe,"Identificador") == 0){
                     Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
                 }
@@ -355,7 +356,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 	    else{
 	        fprintf(erros,"Erro Sintatico: %s Precisavamos de um ) ! Linha: %d\n", palavra,*linha);
        	        while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
-		      (strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)){
+		      (strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)&(strcmp(classe,"else") != 0)){
 		          Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
                 }
             }
@@ -376,7 +377,7 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
 	else{
 	    fprintf(erros,"Erro Sintatico: %s Precisavamos de um end! Linha: %d\n", palavra,*linha);
        	    while((strcmp(classe,"while") != 0) &(strcmp(classe,"for") != 0) & (strcmp(classe,"end") != 0) & (strcmp(classe,"read") != 0) &(strcmp(classe,"write") != 0) &
-		(strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)){
+		(strcmp(classe,"Fim") != 0) &(strcmp(classe,"if") != 0) & (strcmp(classe,"begin") != 0) & (strcmp(classe,"Identificador") != 0)&(strcmp(classe,"else") != 0)){
 		Classe(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);	
             }
         }
@@ -455,6 +456,9 @@ void CMD(char *buffer,int *controle, int *contador,FILE * F, char *palavra, int 
             }
         }
 	CMD(buffer,controle, contador,F,palavra,tamanho,erros,classe,linha);
+    }
+    else{
+	    fprintf(erros,"Nao chamou nenhum comando! Linha: %d\n",*linha);
     }
 }
 
@@ -887,3 +891,4 @@ void sintatico(char *buffer,int *controle, int *contador,FILE * F, char *palavra
     }
 
 }
+
