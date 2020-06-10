@@ -78,7 +78,7 @@ while(1){
     }
     if(verificador ==0){break;}
     verificador = 0;*(contador)=*(contador)+1;i=0;*(controle)=*(controle)+1;
-    if(*contador == 200){
+    if(*contador >= 200){
 	*contador = 0;
 	fread(buffer,200,1,f);
     }
@@ -108,7 +108,7 @@ while(1){
     }
     if(verificador ==0){break;}
     verificador = 0;     *(contador)=*(contador)+1;    *(controle)=*(controle)+1;
-    if(*contador == 200){
+    if(*contador >= 200){
 	*contador = 0;
 	fread(buffer,200,1,f);
     }
@@ -143,7 +143,7 @@ int AutomatoOp(char *buffer, int * contador, int * controle, FILE *f, char *pala
         if(buffer[*(contador)] == operandos2[i]){
 	    palavra[tamanhoId] = operandos2[i];tamanhoId++; 
             *(contador)=*(contador)+1;*(controle)=*(controle)+1;qual = 9+i;
-	    if(*contador == 200){
+	    if(*contador >= 200){
 		*contador = 0;
 		fread(buffer,200,1,f);
     	    }
@@ -176,7 +176,7 @@ int AutomatoComentario(char *buffer, int * contador, int * controle, FILE *f, ch
     while(buffer[*contador] != '}'){
 	*contador = *contador +1;
 	*controle = *controle +1;
-	if(*contador == 200){
+	if(*contador >= 200){
 	    *contador = 0;
 	    fread(buffer,200,1,f);
     	}
@@ -195,7 +195,7 @@ int Lexico(char *buffer,int *controle, int *contador,FILE * F, char *palavra, in
     while(Espaco(buffer[*contador])){
 	if(buffer[*contador] == '\n'){*linha = *linha+1;}
 	*contador = *contador +1;*controle=*controle +1;
-        if(*contador == 200){
+        if(*contador >= 200){
 	    fread(buffer,200,1,F);
 	    *contador = 0;
         }
@@ -219,6 +219,10 @@ int Lexico(char *buffer,int *controle, int *contador,FILE * F, char *palavra, in
 	palavra[0] = buffer[*(contador)];palavra[1] = '\0';
 	*contador = *contador +1;*controle=*controle +1;
 	fprintf(erros,"Erro Lexico: %s nao pertence ao alfabeto! Linha: %d\n", palavra,*linha);
+        if(*contador >= 200){
+	    fread(buffer,200,1,F);
+	    *contador = 0;
+        }
 	return(38);
     }
 
@@ -257,26 +261,4 @@ int j,i,verif=0;
    }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
